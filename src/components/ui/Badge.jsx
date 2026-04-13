@@ -3,11 +3,11 @@ import { cn } from './Card';
 
 export const Badge = forwardRef(({ className, variant = 'default', ...props }, ref) => {
   const variants = {
-    default: "bg-primary-50 text-primary-700 border border-primary-100",
-    secondary: "bg-secondary-50 text-secondary-700 border border-secondary-100",
+    default: "bg-primary-50 text-primary border border-primary-100",
+    secondary: "bg-secondary-50 text-secondary border border-secondary-100",
     outline: "border text-gray-700",
-    warning: "bg-yellow-50 text-yellow-800 border-yellow-200",
-    success: "bg-green-50 text-green-700 border-green-200",
+    warning: "bg-primary-50 text-primary border-primary-100",
+    success: "bg-accent-50 text-accent border-accent-100",
   };
   
   return (

@@ -6,8 +6,8 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
-// Mock data to simulate the marketplace
 const mockPartners = [
   { id: '1', name: 'ENSAM Rabat Fablab', location: 'Rabat', type: 'University', capabilities: ['FDM', 'SLA', 'SLS'], materials: ['PLA', 'Resin', 'Nylon'], rating: 4.8, img: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80', score: 95 },
   { id: '2', name: 'FST Tanger Makerspace', location: 'Tangier', type: 'University', capabilities: ['FDM'], materials: ['PLA', 'PETG', 'ABS'], rating: 4.5, img: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?auto=format&fit=crop&q=80', score: 82 },
@@ -18,6 +18,7 @@ const mockPartners = [
 export default function PartnerNetwork() {
   const [search, setSearch] = useState('');
   const [filterLoc, setFilterLoc] = useState('All');
+  const { t } = useTranslation();
   
   const filteredPartners = mockPartners.filter(p => {
     const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
@@ -31,8 +32,8 @@ export default function PartnerNetwork() {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div className="max-w-xl">
-             <h1 className="text-3xl font-bold tracking-tight text-gray-900">Partner Network</h1>
-             <p className="mt-2 text-lg text-gray-600">Discover and connect with verified manufacturing partners across Morocco to bring your files to life.</p>
+             <h1 className="text-3xl font-bold tracking-tight text-gray-900">{t('network.title')}</h1>
+             <p className="mt-2 text-lg text-gray-600">{t('network.subtitle')}</p>
           </div>
         </div>
 
@@ -41,7 +42,7 @@ export default function PartnerNetwork() {
           <div className="relative flex-1 w-full">
             <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
             <Input 
-              placeholder="Search labs, workshops, materials..." 
+              placeholder={t('network.searchPlaceholder')}
               className="pl-10 w-full"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -51,18 +52,18 @@ export default function PartnerNetwork() {
              <div className="relative flex-1 md:flex-none md:w-48">
                <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
                <select 
-                 className="flex h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 outline-none appearance-none"
+                 className="flex h-11 w-full rounded-xl border border-gray-200 bg-white pl-10 pr-3 py-2 text-sm focus:ring-2 focus:ring-primary outline-none appearance-none"
                  value={filterLoc}
                  onChange={(e) => setFilterLoc(e.target.value)}
                >
-                 <option value="All">All Cities</option>
+                 <option value="All">{t('network.allCities')}</option>
                  <option value="Rabat">Rabat</option>
                  <option value="Casablanca">Casablanca</option>
                  <option value="Tangier">Tangier</option>
                </select>
              </div>
              <Button variant="outline" className="shrink-0">
-               <SlidersHorizontal className="mr-2 h-4 w-4" /> Filters
+               <SlidersHorizontal className="mr-2 h-4 w-4" /> {t('network.filters')}
              </Button>
           </div>
         </div>
@@ -70,8 +71,8 @@ export default function PartnerNetwork() {
         {/* Grid */}
         {filteredPartners.length === 0 ? (
           <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 border-dashed">
-            <h3 className="text-lg font-bold text-gray-900">No partners found</h3>
-            <p className="text-gray-500">Try adjusting your filters or search terms.</p>
+            <h3 className="text-lg font-bold text-gray-900">{t('network.noPartners')}</h3>
+            <p className="text-gray-500">{t('network.noPartnersDesc')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -90,20 +91,20 @@ export default function PartnerNetwork() {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     {partner.score > 90 && (
-                      <div className="absolute top-4 left-4 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                        Best Match
+                      <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                        {t('network.bestMatch')}
                       </div>
                     )}
                   </div>
                   <CardContent className="p-6 flex flex-col flex-1">
                     <div className="flex justify-between items-start mb-2">
                        <div>
-                         <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                         <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
                            <Link to={`/network/${partner.id}`}>{partner.name}</Link>
                          </h3>
                          <div className="flex items-center text-gray-500 text-sm mt-1">
                            <MapPin className="h-3 w-3 mr-1" />
-                           {partner.location} • <span className="ml-1 text-primary-600 font-medium">{partner.type}</span>
+                           {partner.location} • <span className="ml-1 text-secondary font-medium">{partner.type}</span>
                          </div>
                        </div>
                        <div className="flex items-center bg-gray-50 px-2 py-1 rounded-lg">
@@ -114,10 +115,10 @@ export default function PartnerNetwork() {
                     
                     <div className="mt-4 mb-6 space-y-3 flex-1 flex flex-col justify-end">
                        <div>
-                         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Capabilities</p>
+                         <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">{t('network.capabilities')}</p>
                          <div className="flex flex-wrap gap-2">
                            {partner.capabilities.map(cap => (
-                             <Badge key={cap} variant="secondary" className="bg-gray-100 text-gray-700 border-gray-200">{cap}</Badge>
+                             <Badge key={cap} variant="secondary" className="bg-secondary-50 text-secondary border-secondary-200">{cap}</Badge>
                            ))}
                          </div>
                        </div>
@@ -125,7 +126,7 @@ export default function PartnerNetwork() {
                     
                     <Button variant="outline" className="w-full justify-between" asChild>
                        <Link to={`/network/${partner.id}`}>
-                         View Profile <span className="text-primary-600">→</span>
+                         {t('network.viewProfile')} <span className="text-primary">→</span>
                        </Link>
                     </Button>
                   </CardContent>

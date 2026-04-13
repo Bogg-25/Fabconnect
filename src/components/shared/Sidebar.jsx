@@ -8,41 +8,44 @@ import {
   LogOut, 
   Menu,
   X,
-  Hexagon,
   Users,
   Activity,
-  FileText
+  FileText,
+  User
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Sidebar({ role = 'client' }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const getLinks = () => {
     const base = '/dashboard';
     switch(role) {
       case 'admin':
         return [
-          { name: 'Overview', path: base, icon: LayoutDashboard },
-          { name: 'All Orders', path: `${base}/orders`, icon: Package },
-          { name: 'Users & Partners', path: `${base}/users`, icon: Users },
-          { name: 'Platform Health', path: `${base}/health`, icon: Activity },
-          { name: 'Settings', path: `${base}/settings`, icon: Settings },
+          { name: t('sidebar.overview'), path: base, icon: LayoutDashboard },
+          { name: t('sidebar.myProfile'), path: '/admin/profile', icon: User },
+          { name: t('sidebar.allOrders'), path: `${base}/orders`, icon: Package },
+          { name: t('sidebar.usersPartners'), path: `${base}/users`, icon: Users },
+          { name: t('sidebar.platformHealth'), path: `${base}/health`, icon: Activity },
+          { name: t('sidebar.settings'), path: `${base}/settings`, icon: Settings },
         ];
       case 'partner':
         return [
-          { name: 'Overview', path: base, icon: LayoutDashboard },
-          { name: 'Incoming Requests', path: `${base}/requests`, icon: FileText },
-          { name: 'Active Jobs', path: `${base}/jobs`, icon: Package },
-          { name: 'Machine Capacity', path: `${base}/capacity`, icon: Activity },
-          { name: 'Settings', path: `${base}/settings`, icon: Settings },
+          { name: t('sidebar.overview'), path: base, icon: LayoutDashboard },
+          { name: t('sidebar.incomingRequests'), path: `${base}/requests`, icon: FileText },
+          { name: t('sidebar.activeJobs'), path: `${base}/jobs`, icon: Package },
+          { name: t('sidebar.machineCapacity'), path: `${base}/capacity`, icon: Activity },
+          { name: t('sidebar.settings'), path: `${base}/settings`, icon: Settings },
         ];
       default: // client
         return [
-          { name: 'Overview', path: base, icon: LayoutDashboard },
-          { name: 'My Orders', path: `${base}/orders`, icon: Package },
-          { name: 'Quote History', path: `${base}/quotes`, icon: FileText },
-          { name: 'Settings', path: `${base}/settings`, icon: Settings },
+          { name: t('sidebar.overview'), path: base, icon: LayoutDashboard },
+          { name: t('sidebar.myOrders'), path: `${base}/orders`, icon: Package },
+          { name: t('sidebar.quoteHistory'), path: `${base}/quotes`, icon: FileText },
+          { name: t('sidebar.settings'), path: `${base}/settings`, icon: Settings },
         ];
     }
   };
@@ -54,8 +57,8 @@ export default function Sidebar({ role = 'client' }) {
     <>
       <div className="flex h-16 shrink-0 items-center px-6">
          <Link to="/" className="flex items-center gap-2 group">
-           <div className="bg-primary-600 p-1.5 rounded-lg text-white group-hover:bg-primary-700 transition-colors">
-             <Hexagon size={24} strokeWidth={2.5} />
+           <div className="flex items-center justify-center p-1">
+             <img src="/logo.svg" alt="FabConnect Logo" className="h-8 w-auto object-contain" />
            </div>
           <span className="text-xl font-bold tracking-tight text-gray-900">
             FabConnect
@@ -73,12 +76,12 @@ export default function Sidebar({ role = 'client' }) {
                     className={`
                       group flex gap-x-3 rounded-xl p-3 text-sm font-semibold leading-6
                       ${isActive(item.path) 
-                        ? 'bg-primary-50 text-primary-600' 
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-primary-600'}
+                        ? 'bg-primary-50 text-primary' 
+                        : 'text-gray-700 hover:bg-gray-50 hover:text-primary'}
                     `}
                   >
                     <item.icon
-                      className={`h-5 w-5 shrink-0 ${isActive(item.path) ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-600'}`}
+                      className={`h-5 w-5 shrink-0 ${isActive(item.path) ? 'text-primary' : 'text-gray-400 group-hover:text-primary'}`}
                       aria-hidden="true"
                     />
                     {item.name}
@@ -93,7 +96,7 @@ export default function Sidebar({ role = 'client' }) {
               className="group flex gap-x-3 rounded-xl p-3 text-sm font-semibold leading-6 text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors"
             >
               <LogOut className="h-5 w-5 shrink-0 text-gray-400 group-hover:text-red-600" aria-hidden="true" />
-              Sign out
+              {t('sidebar.signOut')}
             </Link>
           </li>
         </ul>
@@ -106,10 +109,10 @@ export default function Sidebar({ role = 'client' }) {
       {/* Mobile Header & Button */}
       <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
         <button type="button" className="-m-2.5 p-2.5 text-gray-700" onClick={() => setIsMobileOpen(true)}>
-          <span className="sr-only">Open sidebar</span>
+          <span className="sr-only">{t('sidebar.openSidebar')}</span>
           <Menu className="h-6 w-6" aria-hidden="true" />
         </button>
-        <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">Dashboard</div>
+        <div className="flex-1 text-sm font-semibold leading-6 text-gray-900">{t('sidebar.dashboard')}</div>
       </div>
 
       {/* Mobile Sidebar overlay */}
@@ -126,9 +129,9 @@ export default function Sidebar({ role = 'client' }) {
             className="fixed inset-y-0 left-0 z-50 w-full max-w-xs bg-white px-6 pb-4"
           >
             <div className="flex h-16 shrink-0 items-center justify-between">
-              <span className="font-bold text-xl">Menu</span>
+              <span className="font-bold text-xl">{t('sidebar.menu')}</span>
               <button type="button" className="-m-2.5 p-2.5 text-gray-700" onClick={() => setIsMobileOpen(false)}>
-                <span className="sr-only">Close sidebar</span>
+                <span className="sr-only">{t('sidebar.closeSidebar')}</span>
                 <X className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>

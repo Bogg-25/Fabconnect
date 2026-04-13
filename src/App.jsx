@@ -13,6 +13,7 @@ import OrderTracking from './pages/workflow/OrderTracking';
 import UserDashboard from './pages/dashboards/UserDashboard';
 import PartnerDashboard from './pages/dashboards/PartnerDashboard';
 import AdminDashboard from './pages/dashboards/AdminDashboard';
+import ProfilePage from './pages/admin/ProfilePage';
 
 // Placeholder Pages (we will build these out next)
 const Placeholder = ({ title }) => (
@@ -55,6 +56,12 @@ function App() {
           <Route path="orders" element={<Placeholder title="Orders List" />} />
           <Route path="settings" element={<Placeholder title="Settings" />} />
         </Route>
+
+        {/* Admin Profile Route */}
+        <Route path="/admin" element={<DashboardLayout />}>
+          <Route path="profile" element={<ProfilePage />} />
+        </Route>
+        
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

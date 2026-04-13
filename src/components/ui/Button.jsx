@@ -6,11 +6,11 @@ export const Button = forwardRef(({ className, variant = 'primary', size = 'defa
   const Comp = asChild ? motion.span : motion.button;
   
   const variants = {
-    primary: "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-500/30",
-    secondary: "bg-secondary-50 text-secondary-700 hover:bg-secondary-100 border border-secondary-200",
-    outline: "border-2 border-primary-600 text-primary-600 hover:bg-primary-50",
-    ghost: "hover:bg-primary-50 text-gray-700 hover:text-primary-600",
-    accent: "bg-accent-500 text-white hover:bg-accent-600 shadow-lg shadow-accent-500/30",
+    primary: "bg-primary text-white hover:bg-primary-hover shadow-lg shadow-primary/30",
+    secondary: "bg-secondary-50 text-secondary hover:bg-secondary-100 border border-secondary-200",
+    outline: "border-2 border-primary text-primary hover:bg-primary-50",
+    ghost: "hover:bg-primary-50 text-gray-700 hover:text-primary",
+    accent: "bg-accent text-white hover:bg-accent-hover shadow-lg shadow-accent/30",
   };
 
   const sizes = {
@@ -25,7 +25,7 @@ export const Button = forwardRef(({ className, variant = 'primary', size = 'defa
       ref={ref}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "inline-flex items-center justify-center rounded-xl font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-xl font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className

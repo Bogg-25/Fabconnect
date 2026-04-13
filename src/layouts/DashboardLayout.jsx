@@ -9,8 +9,8 @@ export default function DashboardLayout() {
 
   // Deduce role from path for the sake of the static demo without Context API
   let currentRole = 'client';
-  if (location.pathname.includes('/dashboard/partner')) currentRole = 'partner';
-  if (location.pathname.includes('/dashboard/admin')) currentRole = 'admin';
+  if (location.pathname.includes('/partner')) currentRole = 'partner';
+  if (location.pathname.includes('/admin')) currentRole = 'admin';
 
   return (
     <div className="min-h-screen bg-gray-50">

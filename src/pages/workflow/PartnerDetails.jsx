@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Star, Factory, CheckCircle2, Package, History, Info } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
-// Mock data to simulate detail fetch
 const MOCK_PARTNER_DATA = {
   '1': {
      id: '1', name: 'ENSAM Rabat Fablab', location: 'Rabat', type: 'University', 
@@ -23,18 +23,16 @@ const MOCK_PARTNER_DATA = {
 
 export default function PartnerDetails() {
   const { id } = useParams();
-  
-  // For the sake of the demo, if we request an ID not in our little mock map above, we'll just show the first one.
+  const { t } = useTranslation();
   const partner = MOCK_PARTNER_DATA[id] || MOCK_PARTNER_DATA['1'];
 
   return (
     <div className="py-8 bg-gray-50 min-h-[calc(100vh-4rem)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        {/* Navigation Breadcrumb */}
         <div className="mb-6">
-          <Link to="/network" className="text-primary-600 hover:text-primary-700 text-sm font-medium">
-            ← Back to Network
+          <Link to="/network" className="text-primary hover:text-primary-hover text-sm font-medium">
+            {t('partnerDetails.backToNetwork')}
           </Link>
         </div>
 
@@ -59,28 +57,28 @@ export default function PartnerDetails() {
 
               <div className="grid grid-cols-3 gap-4">
                  <Card className="bg-white border-none shadow-soft text-center p-6">
-                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">Rating</p>
+                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">{t('partnerDetails.rating')}</p>
                     <div className="flex items-center justify-center text-3xl font-bold text-gray-900">
                       {partner.rating} <Star className="h-6 w-6 text-yellow-400 fill-yellow-400 ml-2" />
                     </div>
                  </Card>
                  <Card className="bg-white border-none shadow-soft text-center p-6">
-                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">Jobs Done</p>
+                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">{t('partnerDetails.jobsDone')}</p>
                     <div className="flex items-center justify-center text-3xl font-bold text-gray-900">
                       {partner.jobsCompleted}
                     </div>
                  </Card>
                  <Card className="bg-white border-none shadow-soft text-center p-6">
-                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">Avg Lead Time</p>
+                    <p className="text-gray-500 text-sm font-medium uppercase tracking-wider mb-1">{t('partnerDetails.avgLeadTime')}</p>
                     <div className="flex items-center justify-center text-3xl font-bold text-gray-900">
-                      3 days
+                      3 {t('partnerDetails.days')}
                     </div>
                  </Card>
               </div>
 
               <Card className="shadow-soft border-none">
                  <CardHeader>
-                    <CardTitle className="text-xl">About</CardTitle>
+                    <CardTitle className="text-xl">{t('partnerDetails.about')}</CardTitle>
                  </CardHeader>
                  <CardContent>
                     <p className="text-gray-600 leading-relaxed text-lg">{partner.desc}</p>
@@ -91,18 +89,18 @@ export default function PartnerDetails() {
                 <Card className="shadow-soft border-none bg-primary-50">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center">
-                      <Factory className="mr-2 h-5 w-5 text-primary-600" /> Technology
+                      <Factory className="mr-2 h-5 w-5 text-primary" /> {t('partnerDetails.technology')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                       {partner.capabilities.map(cap => (
-                        <Badge key={cap} className="bg-white border-primary-200 text-primary-800">{cap}</Badge>
+                        <Badge key={cap} className="bg-white border-primary-200 text-primary">{cap}</Badge>
                       ))}
                     </div>
                     <div className="mt-4 pt-4 border-t border-primary-200/50">
-                       <p className="text-sm font-medium mb-2 text-primary-900">Verified Equipment</p>
-                       <ul className="text-sm text-primary-700 space-y-1">
+                       <p className="text-sm font-medium mb-2 text-primary">{t('partnerDetails.verifiedEquipment')}</p>
+                       <ul className="text-sm text-primary space-y-1">
                           {partner.machines.map((m) => (
                              <li key={m} className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4" /> {m}</li>
                           ))}
@@ -111,16 +109,16 @@ export default function PartnerDetails() {
                   </CardContent>
                 </Card>
 
-                <Card className="shadow-soft border-none bg-teal-50">
+                <Card className="shadow-soft border-none bg-accent-50">
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center">
-                      <Package className="mr-2 h-5 w-5 text-teal-600" /> Materials
+                      <Package className="mr-2 h-5 w-5 text-accent" /> {t('partnerDetails.materials')}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-wrap gap-2">
                        {partner.materials.map(m => (
-                         <Badge key={m} className="bg-white border-teal-200 text-teal-800">{m}</Badge>
+                         <Badge key={m} className="bg-white border-accent-200 text-accent">{m}</Badge>
                        ))}
                     </div>
                   </CardContent>
@@ -131,22 +129,22 @@ export default function PartnerDetails() {
 
            {/* Action Sidebar */}
            <div className="lg:col-span-1 space-y-6">
-              <Card className="shadow-premium border-primary-100 border-2">
+              <Card className="shadow-premium border-primary border-2">
                 <CardContent className="p-6">
-                   <h3 className="font-bold text-xl mb-6">Work with {partner.name}</h3>
+                   <h3 className="font-bold text-xl mb-6">{t('partnerDetails.workWith', { name: partner.name })}</h3>
                    
                    <div className="space-y-4">
                      <Button size="lg" className="w-full">
-                        Request Quote
+                        {t('partnerDetails.requestQuote')}
                      </Button>
                      <Button size="lg" variant="outline" className="w-full" asChild>
-                        <Link to="/upload">Upload files specifically for them</Link>
+                        <Link to="/upload">{t('partnerDetails.uploadFiles')}</Link>
                      </Button>
                    </div>
                    
                    <div className="mt-6 pt-6 border-t border-gray-100 text-sm text-gray-500 flex items-start gap-2">
                       <Info className="h-5 w-5 shrink-0" />
-                      Our platform ensures your files and payments are secure during the entire transaction.
+                      {t('partnerDetails.secureNote')}
                    </div>
                 </CardContent>
               </Card>
@@ -154,7 +152,7 @@ export default function PartnerDetails() {
               <Card className="shadow-soft border-none">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center">
-                    <History className="mr-2 h-5 w-5 text-gray-400" /> Recent Reviews
+                    <History className="mr-2 h-5 w-5 text-gray-400" /> {t('partnerDetails.recentReviews')}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
